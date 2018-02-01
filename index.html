@@ -4,12 +4,14 @@
 <html lang="en">
 
 <head>
-    <title>Quad Solver</title>
+    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="quadscripts.js" type="text/javascript"></script>
     <!-- styles to override bootstrap settings or add our own styles -->
     <style>
     /* Set gray background color and 100% height */
@@ -29,26 +31,64 @@
         }
     }
 
+    .navbar {
+        color: red;
+        background-color: navy;
+    }
+
     .coeff {
         width: 80%;
         background-color: navy;
-        color: white;
         padding: 10px;
         border-radius: 20px;
+        color:red;
     }
 
     canvas {
         display: block;
+        width: 70%;
         border-style: solid;
-        border-color: white;
+        border-color: red;
         border-width: 5px;
         background-color: navy;
         margin-top: 5px;
     }
+
+    #answerBox {
+        padding: 10px;
+        border-radius: 20px;
+        color: red;
+        width: 10%;
+        position: absolute;
+        margin-left: .5%;
+        margin-top: 10%;
+    }
+
+    .color1 {
+        background-color: navy;
+    }
+
+    .color2 {
+        background-color: navy;
+    }
+    .btn {
+        background-color: navy;
+        border-style: solid;
+        border-color: white;
+
+    }
+
+    #zoomBox {
+        background-color: navy;
+    }
+
+    body {
+        font-family: 'Slabo 27px', monospace;
+    }
     </style>
 </head>
 
-<body>
+<body onload="init()">
     <!--  Nav bar that is responsive (container-fluid with data-toggle at collapse) -->
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -62,8 +102,8 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Linear Grapher</a></li>
-                    <li><a href="#2">Quadratic Grapher</a></li>
+                    <li class="active"><a href="#">Quadratic Grapher</a></li>
+                    <li><a href="#2">Linear Grapher</a></li>
                     <li><a href="#3">Cubic Grapher</a></li>
                 </ul>
             </div>
@@ -82,12 +122,24 @@
                         <br> c =
                         <input size="5" type="text" id="constant" value="0">
                         <br>
-                        <button class="btn" onclick="">Submit Values</button>
+                        <div></div>
+                        <button class="btn" onclick="QF()">Submit Values</button>
+                        <div> </div>
+                        <div></div>
+                        <button class="btn" onclick="zoomIn(), QF()">+</button>
+                        <button class="btn" onclick="zoomOut(), QF()">-</button>
+                        <div id="quadformanswer" class="color1">X1 Intercept</div>
+                        <div id="quadformanswer2" class="color2">X2 Intercept</div>
+                        <div id="vertex" class="color1">Your Vertex</div>
+                        <div id="yInt" class="color2">Y Intercept</div>
+                        <div id="correspondingPoint" class="color1">Corresponding Point</div>
                     </p>
                 </div>
             </div>
             <div class="col-sm-8 text-left">
                 <canvas class="canvasGrids" id="mycanvas"></canvas>
+            </div>
+            <div id="answerBox" class="col-sm-2">
             </div>
         </div>
     </div>
