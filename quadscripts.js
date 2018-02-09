@@ -176,6 +176,13 @@ function QF() {
         console.log(a, b, c);
         $("#quadformanswer").text(quadForm_answer1);
         $("#quadformanswer2").text(quadForm_answer2);
+        ctx.fillStyle = "red"
+        ctx.arc((w / 2) + (quadForm_answer1 * zoom), (h / 2), 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.arc((w / 2) + (quadForm_answer2 * zoom), (h / 2), 6, 0, 2 * Math.PI);
+        ctx.fill();
+
+        
     }
 
     results();
@@ -190,15 +197,25 @@ function results() {
     // finding vertext and displaying symline and yint results
     vX = -(b * 1) / (2 * a);
     vY = a * Math.pow(vX, 2) + b * vX + c * 1;
+    vX = vX.toFixed(2);
+    vY = vY.toFixed(2);
+
     $("#vertex").text("Vertex is at (" + vX + "," + vY + ")");
     $("#yInt").text("The Y Intercept is at (0," + c + ")");
-    $("#correspondingPoint").text("(" + 2 * vX + "," + c + ")")
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.arc((w / 2) + (vX * zoom), (h / 2) - (vY * zoom), 6, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.arc((w/2),(h/2) - (c*zoom), 6, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    $("#correspondingPoint").text("Corresponding Point is at(" + 2 * vX + "," + c + ")")
     graphQuad();
 } // close results()
 
 function graphpaper() {
     // the x and y axis drawn
-    ctx.strokeStyle = "#000000"
+    ctx.strokeStyle = "#DCDADA"
     ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.moveTo(0, h / 2);
@@ -210,10 +227,10 @@ function graphpaper() {
 }
 
 function vertLineGrapher() {
-    ctx.stokeStyle="rgba(0,255,0,.5)";
+    ctx.stokeStyle = "rgba(0,255,0,.5)";
     var vlX = w / 2;
     var vlY = 0;
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#DCDADA";
     ctx.fillRect(295, 195, 10, 10);
     while (vlX < w) {
         vlX = vlX + zoom;
@@ -224,7 +241,7 @@ function vertLineGrapher() {
 function vertLineGrapher2() {
     var vlX2 = w / 2;
     var vlY2 = 0;
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#DCDADA";
     ctx.fillRect(295, 195, 10, 10);
     while (vlX2 > 0) {
         vlX2 = vlX2 - zoom;
@@ -236,7 +253,7 @@ function vertLineGrapher2() {
 function horizLineGrapher() {
     var hlX = 0;
     var hlY = h / 2;
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#DCDADA";
     while (hlY < 400) {
         hlY = hlY + zoom;
         ctx.fillRect(hlX, hlY, w, 2);
@@ -246,7 +263,7 @@ function horizLineGrapher() {
 function horizLineGrapher2() {
     var hlX2 = 0;
     var hlY2 = h / 2;
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#DCDADA";
     while (hlY2 > 0) {
         hlY2 = hlY2 - zoom;
         ctx.fillRect(hlX2, hlY2, w, 2);
@@ -264,18 +281,18 @@ function zoomOut() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function graphQuad () {
-  for (var i = 0; i < w; i++) {
-    x = (w/2-i)/zoom;
-    y = c*1+b*x+a*Math.pow(x,2);
-    nx =  (w/2-(i+1))/zoom;
-    ny =  c*1+b*nx+a*Math.pow(nx,2);
-    console.log(x, y, nx, ny)
-    ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "Red";
-    ctx.moveTo((w/2)+(x*zoom), (h/2)-(y*zoom));
-    ctx.lineTo((w/2)+(nx*zoom), (h/2)-(ny*zoom));
-    ctx.stroke();
-  }
+function graphQuad() {
+    for (var i = 0; i < w; i++) {
+        x = (w / 2 - i) / zoom;
+        y = c * 1 + b * x + a * Math.pow(x, 2);
+        nx = (w / 2 - (i + 1)) / zoom;
+        ny = c * 1 + b * nx + a * Math.pow(nx, 2);
+        console.log(x, y, nx, ny)
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "Red";
+        ctx.moveTo((w / 2) + (x * zoom), (h / 2) - (y * zoom));
+        ctx.lineTo((w / 2) + (nx * zoom), (h / 2) - (ny * zoom));
+        ctx.stroke();
+    }
 }
